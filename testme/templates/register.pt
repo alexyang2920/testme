@@ -1,0 +1,12 @@
+<metal:block metal:use-macro="load: ./macros/layout.pt">
+    <title metal:fill-slot="title">
+        Register
+    </title>
+    <metal:block metal:fill-slot="css"><!-- css -->
+    </metal:block>
+    <metal:block metal:fill-slot="content"><!-- main -->
+        <h1 style="margin-top:16;">Register</h1>
+    </metal:block>
+    <metal:block metal:fill-slot="script"><!-- script -->
+    </metal:block>
+</metal:block>

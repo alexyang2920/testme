@@ -1,8 +1,11 @@
 from pyramid.config import Configurator
 from pyramid_zodbconn import get_connection
 
-
 from pyramid.authorization import ACLAuthorizationPolicy
+
+from pyramid.session import SignedCookieSessionFactory
+
+from zope import component
 
 from .models import appmaker
 
@@ -17,7 +20,10 @@ def root_factory(request):
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    with Configurator(settings=settings) as config:
+    registry = component.getGlobalSiteManager()
+    with Configurator(registry=registry) as config:
+        config.setup_registry(settings=settings)
+
         settings['tm.manager_hook'] = 'pyramid_tm.explicit_manager'
         config.include('pyramid_tm')
         config.include('pyramid_retry')
@@ -26,8 +32,10 @@ def main(global_config, **settings):
         config.include('pyramid_chameleon')
         config.include('.routes')
 
-        # authentication policy
+        session_factory = SignedCookieSessionFactory('foo')
+        config.set_session_factory(session_factory)
 
+        # authentication policy
         config.set_authentication_policy(create_authentication_policy())
 
         # authorization policy

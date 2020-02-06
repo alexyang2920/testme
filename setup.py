@@ -21,7 +21,12 @@ requires = [
     'ZODB3',
     'RelStorage',
     'zc.zlibstorage',
-    'gevent-websocket'
+    'gevent-websocket',
+    'zope.component',
+    'zope.interface',
+    'zope.schema',
+    'zope.container',
+    'zope.cachedescriptors'
 ]
 
 tests_require = [
