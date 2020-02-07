@@ -4,7 +4,11 @@
     </title>
     <metal:block metal:fill-slot="css"><!-- css -->
         <style>
-
+            .signup {
+                float: right;
+                padding: 8px 12px;
+                height: 36px;
+            }
         </style>
     </metal:block>
     <metal:block metal:fill-slot="content"><!-- main -->
@@ -35,6 +39,9 @@
                         Login
                     </div>
                 </button>
+                <div class="signup">
+                    Need an account? <a href="/register">sign up here.</a>
+                </div>
             </div>
             <input type='text' name="success" style="display:none" value="${success}"/>
         </div>

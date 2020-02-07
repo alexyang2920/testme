@@ -23,4 +23,5 @@ test
 .pydevproject
 var/*
 !var/.gitkeep
+.settings
 

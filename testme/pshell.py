@@ -1,4 +1,6 @@
-from . import models
+from pyramid_zodbconn import get_connection
+
+from testme import models
 
 
 def setup(env):
@@ -10,3 +12,4 @@ def setup(env):
     # inject some vars into the shell builtins
     env['tm'] = request.tm
     env['models'] = models
+    env['app_root'] = get_connection(request).root()

@@ -7,14 +7,18 @@ from pyramid.session import SignedCookieSessionFactory
 
 from zope import component
 
-from .models import appmaker
+from testme.models.interfaces import IApplicationRoot
 
 from testme.pyramid_authentication import create_authentication_policy
 
+from testme.appserver import ApplicationServer
+
+from testme.interfaces import IApplicationSettings
+from testme.interfaces import IApplicationServer
+
 
 def root_factory(request):
-    conn = get_connection(request)
-    return appmaker(conn.root())
+    return IApplicationRoot(request)
 
 
 def main(global_config, **settings):
@@ -24,14 +28,21 @@ def main(global_config, **settings):
     with Configurator(registry=registry) as config:
         config.setup_registry(settings=settings)
 
+        component.getGlobalSiteManager().registerUtility(settings, IApplicationSettings)
+
         settings['tm.manager_hook'] = 'pyramid_tm.explicit_manager'
         config.include('pyramid_tm')
         config.include('pyramid_retry')
         config.include('pyramid_zodbconn')
+
         config.set_root_factory(root_factory)
         config.include('pyramid_chameleon')
         config.include('.routes')
 
+        config.include('pyramid_zcml')
+        config.load_zcml('configure.zcml')
+
+        # session factory
         session_factory = SignedCookieSessionFactory('foo')
         config.set_session_factory(session_factory)
 
@@ -42,4 +53,9 @@ def main(global_config, **settings):
         config.set_authorization_policy(ACLAuthorizationPolicy())
 
         config.scan()
+
+    # register server utility, open root database connection.
+    server = ApplicationServer(config.registry._zodb_databases)
+    component.getGlobalSiteManager().registerUtility(server, IApplicationServer)
+
     return config.make_wsgi_app()

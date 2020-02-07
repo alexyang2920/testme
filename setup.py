@@ -14,6 +14,7 @@ requires = [
     'pyramid',
     'pyramid_chameleon',
     'pyramid_debugtoolbar',
+    'pyramid-zcml',
     'pyramid_retry',
     'pyramid_tm',
     'pyramid_zodbconn',
@@ -26,7 +27,9 @@ requires = [
     'zope.interface',
     'zope.schema',
     'zope.container',
-    'zope.cachedescriptors'
+    'zope.cachedescriptors',
+    'zope.processlifetime',
+    'zope.generations'
 ]
 
 tests_require = [

@@ -1,0 +1,18 @@
+<!-- -*- mode: nxml -*- -->
+<configure	xmlns="http://namespaces.zope.org/zope"
+			xmlns:zcml="http://namespaces.zope.org/zcml">
+
+	<include package="zope.component" file="meta.zcml" />
+	<include package="zope.component" />
+
+	<include package="zope.generations" />
+	<include package="zope.generations" file="subscriber.zcml" />
+
+	<!-- Database creation and migration -->
+	<utility factory=".generations.install.AppSchemaManager"
+			 provides="zope.generations.interfaces.IInstallableSchemaManager"
+			 name="testme" />
+
+	<include package=".models" file="configure.zcml" />
+
+</configure>

@@ -96,9 +96,6 @@ body {
     color: red;
 }
 
-a {
-    text-decoration: none;
-}
 
 /** form container */
 .form-container {
@@ -143,6 +140,7 @@ a {
     border-radius: 4px;
     padding: 8px 12px;
     min-width: 80px;
+    height: 36px;
 }
 
 .btnSave {
@@ -172,4 +170,9 @@ a {
 .fa {
     margin-left: -6px;
     margin-right: 6px;
+}
+
+a {
+    color: #3fb3f6;
+    text-decoration: none;
 }

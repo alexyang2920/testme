@@ -40,7 +40,7 @@ class LoginView(BaseView):
         if not check_credentials(username, password):
             raise_json_error(hexc.HTTPUnprocessableEntity,
                              "Invalid credentials.")
-        
+
         headers = remember(self.request, username)
         self.request.response.headerlist.extend(headers)
 

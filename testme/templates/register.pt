@@ -1,12 +1,55 @@
 <metal:block metal:use-macro="load: ./macros/layout.pt">
     <title metal:fill-slot="title">
-        Register
+        Sign up
     </title>
     <metal:block metal:fill-slot="css"><!-- css -->
+        <style>
+
+        </style>
     </metal:block>
     <metal:block metal:fill-slot="content"><!-- main -->
-        <h1 style="margin-top:16;">Register</h1>
+        <form action="/login" method="POST">
+        <div class="form-container">
+            <div class="row-group">
+                <div>
+                    <label class="required">Username</label>
+                </div>
+                <input type="text" name="username" required/>
+            </div>
+            <div class="row-group">
+                <div>
+                    <label class="required">Password</label>
+                </div>
+                <input type="text" name="password" required/>
+            </div>
+            <div class="row-group">
+                <div class="success success" style="display:none;"></div>
+                <div class="error error" style="display:none;"></div>
+            </div>
+            <div class="row-group">
+                <button type="button" class='btn btnSave' onclick="register(this);">
+                    <div class="spinnerText" style="display:none;">
+                        <i class="fa fa-circle-o-notch fa-spin"></i>Sign...
+                    </div>
+                    <div class="nonSpinnerText">
+                        Sign up
+                    </div>
+                </button>
+            </div>
+        </div>
+        </form>
     </metal:block>
     <metal:block metal:fill-slot="script"><!-- script -->
+        <script>
+            function register(me) {
+                var form = $($(me).closest('form'));
+                var url = '/register';
+                var data = getFormData(form);
+                data = JSON.stringify(data);
+                doAjaxRequest(me, url, data, 'POST', '.success', '.error', null, function (result) {
+                    window.location.href = result['redirect'];
+                });
+            }
+        </script>
     </metal:block>
 </metal:block>

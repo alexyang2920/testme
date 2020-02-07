@@ -1,13 +1,16 @@
 from persistent import Persistent
 
-from zope import component
 from zope import interface
 from zope.container.folder import Folder
 from zope.container.contained import Contained
 from zope.schema.fieldproperty import createFieldProperties
 
+from testme.models.base import Base
+
 from testme.models.interfaces import IUser
 from testme.models.interfaces import IUsersFolder
+
+from testme.models.utils import get_users_folder
 
 
 @interface.implementer(IUsersFolder)
@@ -26,18 +29,31 @@ class UsersFolder(Folder):
 
 
 @interface.implementer(IUser)
-class User(Persistent, Contained):
+class User(Base, Persistent, Contained):
 
     createFieldProperties(IUser)
 
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+
+def _hash_password(password):
+    # TODO encoding it
+    # may ref https://www.vitoshacademy.com/hashing-passwords-in-python/
+    return password
+
 
 def register_user(username, password):
-    user = User(username, password)
-    users = component.getUtility(IUsersFolder)
-    return users.storeUser(user)
+    user = User(username, _hash_password(password))
+    folder = get_users_folder()
+    return folder.storeUser(user)
 
 
 def check_credentials(username, password):
-    if username=='admin' and password == 'admin':
-        return True
-    return False
+    folder = get_users_folder()
+    if username not in folder:
+        return False
+
+    user = folder.getUser(username)
+    return bool(_hash_password(password) == user.password)

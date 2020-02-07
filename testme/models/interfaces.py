@@ -6,6 +6,10 @@ from zope.location.interfaces import IContained
 from zope.schema import TextLine
 
 
+class IApplicationRoot(IContainer):
+    pass
+
+
 class IUser(IContained):
 
     username = TextLine(title="The username",
@@ -20,3 +24,9 @@ class IUsersFolder(IContainer):
     An container that holds all users, keyed by username.
     """
     contains(IUser)
+
+
+class NoUserFound(ValueError):
+    """
+    An error raise when the user doesn't exist.
+    """
