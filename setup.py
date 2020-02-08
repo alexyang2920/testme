@@ -21,6 +21,7 @@ requires = [
     'pyramid_retry',
     'pyramid_tm',
     'pyramid_zodbconn',
+    'supervisor',
     'transaction',
     'ZODB3',
     'RelStorage',

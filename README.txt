@@ -31,3 +31,6 @@ Getting Started
 - Send Email
 	qp --config qp.ini
 	https://docs.pylonsproject.org/projects/pyramid-mailer/en/latest/#queue
+
+- Start supervisor
+    supervisord -n
