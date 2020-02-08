@@ -27,3 +27,7 @@ Getting Started
 - Run your project.
 
     env/bin/pserve development.ini
+
+- Send Email
+	qp --config qp.ini
+	https://docs.pylonsproject.org/projects/pyramid-mailer/en/latest/#queue

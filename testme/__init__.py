@@ -37,6 +37,7 @@ def main(global_config, **settings):
 
         config.set_root_factory(root_factory)
         config.include('pyramid_chameleon')
+        config.include('pyramid_mako')
         config.include('.routes')
 
         config.include('pyramid_zcml')

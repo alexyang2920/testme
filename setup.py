@@ -11,9 +11,12 @@ with open(os.path.join(here, 'CHANGES.txt')) as f:
 requires = [
     'gunicorn[gevent]',
     'plaster_pastedeploy',
+    'premailer',
     'pyramid',
     'pyramid_chameleon',
     'pyramid_debugtoolbar',
+    'pyramid_mailer',
+    'pyramid-mako',
     'pyramid-zcml',
     'pyramid_retry',
     'pyramid_tm',

@@ -33,9 +33,10 @@ class User(Base, Persistent, Contained):
 
     createFieldProperties(IUser)
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, email):
         self.username = username
         self.password = password
+        self.email = email
 
 
 def _hash_password(password):
@@ -44,8 +45,8 @@ def _hash_password(password):
     return password
 
 
-def register_user(username, password):
-    user = User(username, _hash_password(password))
+def register_user(username, password, email):
+    user = User(username, _hash_password(password), email)
     folder = get_users_folder()
     return folder.storeUser(user)
 

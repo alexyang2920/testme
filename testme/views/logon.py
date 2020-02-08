@@ -80,8 +80,9 @@ class RegisterView(BaseView):
     def __call__(self):
         username = self.get_value('username')
         password = self.get_value('password')
+        email = self.get_value('email')
         try:
-            register_user(username, password)
+            register_user(username, password, email)
         except KeyError:
             raise_json_error(hexc.HTTPUnprocessableEntity,
                              'Username is not available.')

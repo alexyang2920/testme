@@ -23,6 +23,12 @@
                 <input type="text" name="password" required/>
             </div>
             <div class="row-group">
+                <div>
+                    <label class="required">Email</label>
+                </div>
+                <input type="text" name="email" required/>
+            </div>
+            <div class="row-group">
                 <div class="success success" style="display:none;"></div>
                 <div class="error error" style="display:none;"></div>
             </div>

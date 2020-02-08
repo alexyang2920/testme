@@ -4,6 +4,7 @@ from zope.container.constraints import contains
 from zope.location.interfaces import IContained
 
 from zope.schema import TextLine
+from zope.schema import Float
 
 
 class IApplicationRoot(IContainer):
@@ -17,6 +18,12 @@ class IUser(IContained):
 
     password = TextLine(title="The password",
                         required=True)
+
+    email = TextLine(title="The email",
+                     required=True)
+
+    last_verified = Float(title="The UTC time stamp when this user is email verified.",
+                          required=False)
 
 
 class IUsersFolder(IContainer):
