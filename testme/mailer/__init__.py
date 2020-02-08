@@ -1,3 +1,8 @@
+"""
+After run queue_html_text_email, they will be stored in the local maildir folder,
+in order to send out to target user, we need to run qp process explicitly:
+    qp --config qp.ini
+"""
 import premailer
 
 from pyramid.renderers import render
