@@ -9,3 +9,7 @@ class IApplicationSettings(interface.Interface):
 
 class IApplicationServer(interface.Interface):
     pass
+
+
+class InvalidSiteError(Exception):
+    pass

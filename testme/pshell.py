@@ -1,5 +1,7 @@
 from pyramid_zodbconn import get_connection
 
+from zope.component.hooks import setSite
+
 from testme import models
 
 
@@ -8,8 +10,11 @@ def setup(env):
 
     # start a transaction
     request.tm.begin()
+    conn = get_connection(request)
 
-    # inject some vars into the shell builtins
     env['tm'] = request.tm
     env['models'] = models
-    env['app_root'] = get_connection(request).root()
+    env['conn'] = conn.root()
+    env['testme'] = site = conn.root()[models.APP_ROOT_KEY]
+
+    setSite(site)

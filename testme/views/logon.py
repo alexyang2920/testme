@@ -6,7 +6,8 @@ from pyramid.security import forget
 
 from urllib.parse import urljoin
 
-from testme.models import ApplicationRoot
+from testme.models.interfaces import IApplicationRoot
+
 from testme.models.users import check_credentials
 from testme.models.users import register_user
 
@@ -16,7 +17,7 @@ from testme.views.utils import raise_json_error
 
 
 @view_config(renderer='../templates/login.pt', 
-             context=ApplicationRoot, 
+             context=IApplicationRoot, 
              request_method='GET',
              name='login')
 class LoginPage(BaseTemplateView):
@@ -29,7 +30,7 @@ class LoginPage(BaseTemplateView):
 
 
 @view_config(renderer='json', 
-             context=ApplicationRoot, 
+             context=IApplicationRoot, 
              request_method='POST',
              name='login')
 class LoginView(BaseView):
@@ -48,7 +49,7 @@ class LoginView(BaseView):
         return {'redirect': success}
 
 
-@view_config(context=ApplicationRoot, 
+@view_config(context=IApplicationRoot, 
              request_method='GET',
              name='logout')
 class LogoutView(BaseView):
@@ -62,7 +63,7 @@ class LogoutView(BaseView):
 
 
 @view_config(renderer='../templates/register.pt', 
-             context=ApplicationRoot, 
+             context=IApplicationRoot, 
              request_method='GET',
              name='register')
 class RegisterPage(BaseTemplateView):
@@ -72,7 +73,7 @@ class RegisterPage(BaseTemplateView):
 
 
 @view_config(renderer='json', 
-             context=ApplicationRoot, 
+             context=IApplicationRoot, 
              request_method='POST',
              name='register')
 class RegisterView(BaseView):

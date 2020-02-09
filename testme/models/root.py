@@ -8,10 +8,7 @@ from zope.site.folder import Folder
 
 from testme.models.interfaces import IApplicationRoot
 
-
-APP_ROOT_KEY = 'testme'
-USERS = 'users'
-INTIDS = 'intids'
+logger = __import__('logging').getLogger(__name__)
 
 
 @interface.implementer(IApplicationRoot)

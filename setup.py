@@ -10,6 +10,7 @@ with open(os.path.join(here, 'CHANGES.txt')) as f:
 
 requires = [
     'gunicorn[gevent]',
+    'gevent-websocket',
     'plaster_pastedeploy',
     'premailer',
     'pyramid',
@@ -26,14 +27,20 @@ requires = [
     'ZODB3',
     'RelStorage',
     'zc.zlibstorage',
-    'gevent-websocket',
     'zope.component',
     'zope.interface',
     'zope.schema',
     'zope.container',
     'zope.cachedescriptors',
     'zope.processlifetime',
-    'zope.generations'
+    'zope.generations',
+
+    # indexing
+    'zope.keyreference',
+    'zope.intid',
+    'zc.intid',
+    'zope.catalog',
+    'zope.site',
 ]
 
 tests_require = [

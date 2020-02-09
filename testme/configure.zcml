@@ -5,8 +5,17 @@
 	<include package="zope.component" file="meta.zcml" />
 	<include package="zope.component" />
 
+	<include package="zope.security" file="meta.zcml" />
+	<include package="zope.component" />
+
 	<include package="zope.generations" />
 	<include package="zope.generations" file="subscriber.zcml" />
+
+	<!-- indexing -->
+	<include package="zope.keyreference" file="configure.zcml" />
+	<include package="zope.catalog" file="subscribers.zcml" />
+	<include package="zc.intid" file="subscribers.zcml" />
+	<include package="zc.intid" file="zope-intid.zcml" />
 
 	<!-- Database creation and migration -->
 	<utility factory=".generations.install.AppSchemaManager"

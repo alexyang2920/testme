@@ -5,7 +5,11 @@ from pyramid.authorization import ACLAuthorizationPolicy
 
 from pyramid.session import SignedCookieSessionFactory
 
+from pyramid.tweens import EXCVIEW
+
 from zope import component
+
+from zope.component.hooks import setHooks
 
 from testme.models.interfaces import IApplicationRoot
 
@@ -24,6 +28,9 @@ def root_factory(request):
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
+    # z3c registry required this.
+    # setHooks()
+
     registry = component.getGlobalSiteManager()
     with Configurator(registry=registry) as config:
         config.setup_registry(settings=settings)
@@ -34,6 +41,9 @@ def main(global_config, **settings):
         config.include('pyramid_tm')
         config.include('pyramid_retry')
         config.include('pyramid_zodbconn')
+
+        config.add_tween('testme.tweens.site_tween_factory',
+                         over=EXCVIEW)
 
         config.set_root_factory(root_factory)
         config.include('pyramid_chameleon')
