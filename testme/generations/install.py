@@ -20,7 +20,9 @@ from testme.models import INTIDS
 
 from testme.models.users import UsersFolder
 from testme.models.index import install_users_catalog
-from zope.intid.interfaces import IIntIds
+from zope.intid.interfaces import IIntIds as zope_IIntIds
+from zc.intid.interfaces import IIntIds as zc_IIntIds
+
 
 generation = 0
 
@@ -43,7 +45,8 @@ def install_users(root_folder):
 def install_intids(root_folder):
     if INTIDS not in root_folder:
         root_folder[INTIDS] = intids = IntIds(attribute="_intid")
-        component.provideUtility(intids, IIntIds)
+        component.getSiteManager().registerUtility(intids, zope_IIntIds)
+        component.getSiteManager().registerUtility(intids, zc_IIntIds)
     return root_folder[INTIDS]
 
 

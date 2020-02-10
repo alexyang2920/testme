@@ -3,6 +3,8 @@ import BTrees
 from zope import interface
 from zope import component
 
+from zope.intid.interfaces import IIntIds
+
 from zope.catalog.catalog import Catalog
 from zope.catalog.attribute import AttributeIndex as RawAttributeIndex
 
@@ -46,6 +48,10 @@ class UsersCatalog(BaseCatalog):
     pass
 
 
+def get_users_catalog():
+    return component.getUtility(IUsersCatalog)
+
+
 def install_users_catalog(app_root):
     if USERS_CATALOG_NAME not in app_root:
         catalog = app_root[USERS_CATALOG_NAME] = UsersCatalog()
@@ -53,6 +59,19 @@ def install_users_catalog(app_root):
                                         (IX_EMAIL, EmailIndex)):
             catalog[index_name] = index_value()
 
-        component.provideUtility(catalog, IUsersCatalog)
+        component.getSiteManager().registerUtility(catalog, IUsersCatalog)
 
     return app_root[USERS_CATALOG_NAME]
+
+
+def query_users(email):
+    result = list()
+    catalog = get_users_catalog()
+    intids_set = catalog.apply({IX_EMAIL: (email, email)})
+    if intids_set:
+        intids = component.getUtility(IIntIds)
+        for x in intids_set:
+            obj = intids.queryObject(x)
+            if obj is not None:
+                result.append(obj)
+    return result

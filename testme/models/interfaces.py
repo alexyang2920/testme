@@ -1,3 +1,5 @@
+from zope import interface
+
 from zope.catalog.interfaces import ICatalog
 
 from zope.container.interfaces import IContainer
@@ -37,6 +39,12 @@ class IUsersFolder(IContainer):
     An container that holds all users, keyed by username.
     """
     contains(IUser)
+
+
+class IUsersFolderFactory(interface.Interface):
+    """
+    An object that is called to return an IUsersFolder.
+    """
 
 
 class NoUserFound(ValueError):

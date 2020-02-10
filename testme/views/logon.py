@@ -6,10 +6,15 @@ from pyramid.security import forget
 
 from urllib.parse import urljoin
 
+from zope.cachedescriptors.property import Lazy
+
 from testme.models.interfaces import IApplicationRoot
 
+from testme.models.users import User
 from testme.models.users import check_credentials
-from testme.models.users import register_user
+from testme.models.users import get_users_folder
+
+from testme.models.index import query_users
 
 from testme.views.base import BaseView
 from testme.views.base import BaseTemplateView
@@ -78,14 +83,27 @@ class RegisterPage(BaseTemplateView):
              name='register')
 class RegisterView(BaseView):
 
+    @Lazy
+    def users_folder(self):
+        return get_users_folder(app_root=self.context)
+
     def __call__(self):
         username = self.get_value('username')
         password = self.get_value('password')
         email = self.get_value('email')
-        try:
-            register_user(username, password, email)
-        except KeyError:
+        if username in self.users_folder:
             raise_json_error(hexc.HTTPUnprocessableEntity,
-                             'Username is not available.')
+                             'Username is not available: %s.' % username)
+
+        if query_users(email):
+            raise_json_error(hexc.HTTPUnprocessableEntity,
+                             'Email has been signed up by other user: %s.' % email)
+
+        user = User(username=username,
+                    password=password,
+                    email=email)
+
+        self.users_folder.storeUser(user)
+
         url = urljoin(self.request.application_url, 'login')
         return {'redirect': url}
