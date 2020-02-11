@@ -34,3 +34,11 @@ Getting Started
 
 - Start supervisor
     supervisord -n
+
+- github
+	ssh-add -K ~/.ssh/id_rsa_zpyang2920
+
+
+
+
+    
