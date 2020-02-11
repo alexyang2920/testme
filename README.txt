@@ -38,7 +38,17 @@ Getting Started
 - github
 	ssh-add -K ~/.ssh/id_rsa_zpyang2920
 
+- nginx
+	brew install nginx
+	nginx -h
 
+	# stop
+	nginx -s stop -c /Users/alexyang/Documents/exp/zope_hacking/project/testme/etc/nginx/nginx.conf
 
+	# start
+	nginx -c /Users/alexyang/Documents/exp/zope_hacking/project/testme/etc/nginx/nginx.conf
 
-    
+	# config ref:
+	https://www.cnblogs.com/xiaogangqq123/archive/2011/03/02/1969006.html
+	https://blog.csdn.net/physicsdandan/article/details/45667357
+	
