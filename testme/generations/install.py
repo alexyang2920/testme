@@ -1,6 +1,9 @@
 from zc.intid.utility import IntIds
 
 from zope import component
+from zope import interface
+
+from zope.catalog.interfaces import INoAutoIndex
 
 from zope.component.hooks import setHooks
 from zope.component.hooks import site as set_site
@@ -69,6 +72,7 @@ def evolve(context):
     site.__name__ = APP_ROOT_KEY
     root_folder[APP_ROOT_KEY] = site
     conn.add(site)
+    interface.alsoProvides(site, INoAutoIndex)
     assert site.__parent__ is root_folder
     assert site._p_jar is conn
     assert IApplicationRoot.providedBy(site) is True

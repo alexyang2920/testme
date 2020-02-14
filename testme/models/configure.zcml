@@ -5,9 +5,9 @@
 	<include package="zope.component" file="meta.zcml" />
 	<include package="zope.component" />
 
-	<!--<adapter factory=".adapters._site_manager_from_context"
+	<adapter factory=".adapters._site_manager_from_context"
 		 	 for="*"
-		 	 provides="zope.interface.interfaces.IComponentLookup"/>-->
+		 	 provides="zope.interface.interfaces.IComponentLookup"/>
 
 	<adapter factory=".adapters._application_root"
 		 	 for="pyramid.interfaces.IRequest"
