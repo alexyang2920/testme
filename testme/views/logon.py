@@ -30,7 +30,7 @@ class LoginPage(BaseTemplateView):
     def __call__(self):
         if self.request.authenticated_userid:
             return hexc.HTTPFound(location='/')
-        success = self.request.params.get('success') or '/'
+        success = self.request.params.get('success') or '/testme'
         return {'success': success}
 
 
@@ -50,7 +50,7 @@ class LoginView(BaseView):
         headers = remember(self.request, username)
         self.request.response.headerlist.extend(headers)
 
-        success = self.request.params.get('success') or '/'
+        success = self.request.params.get('success') or '/testme'
         return {'redirect': success}
 
 
@@ -62,7 +62,7 @@ class LogoutView(BaseView):
     def __call__(self):
         self.request.session.invalidate()
         headers = forget(self.request)
-        url = urljoin(self.request.application_url, 'login')
+        url = urljoin(self.request.application_url, '/testme/login')
         return hexc.HTTPFound(location=url,
                               headers=headers)
 
@@ -105,5 +105,5 @@ class RegisterView(BaseView):
 
         self.users_folder.storeUser(user)
 
-        url = urljoin(self.request.application_url, 'login')
+        url = urljoin(self.request.application_url, '/testme/login')
         return {'redirect': url}

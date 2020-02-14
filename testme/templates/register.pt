@@ -49,7 +49,7 @@
         <script>
             function register(me) {
                 var form = $($(me).closest('form'));
-                var url = '/register';
+                var url = '/testme/register';
                 var data = getFormData(form);
                 data = JSON.stringify(data);
                 doAjaxRequest(me, url, data, 'POST', '.success', '.error', null, function (result) {

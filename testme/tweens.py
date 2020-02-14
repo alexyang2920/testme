@@ -15,7 +15,7 @@ class site_tween(object):
         self.handler = handler
 
     def __call__(self, request):
-        site = get_connection(request).root()['testme']
+        site = get_connection(request).root()['Application']['testme']
         setSite(site)
         try:
             return self.handler(request)

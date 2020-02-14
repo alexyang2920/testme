@@ -40,7 +40,7 @@
                     </div>
                 </button>
                 <div class="signup">
-                    Need an account? <a href="/register">sign up here.</a>
+                    Need an account? <a href="/testme/register">sign up here.</a>
                 </div>
             </div>
             <input type='text' name="success" style="display:none" value="${success}"/>
@@ -51,7 +51,7 @@
         <script>
             function login(me) {
                 var form = $($(me).closest('form'));
-                var url = '/login';
+                var url = '/testme/login';
                 var data = getFormData(form);
                 data = JSON.stringify(data);
                 doAjaxRequest(me, url, data, 'POST', '.success', '.error', null, function (result) {

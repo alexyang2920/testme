@@ -51,4 +51,6 @@ Getting Started
 	# config ref:
 	https://www.cnblogs.com/xiaogangqq123/archive/2011/03/02/1969006.html
 	https://blog.csdn.net/physicsdandan/article/details/45667357
+
+	https://www.digitalocean.com/community/questions/configure-nginx-for-nodejs-backend-and-react-frontend-app
 	

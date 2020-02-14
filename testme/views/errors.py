@@ -1,3 +1,4 @@
+from urllib.parse import urljoin
 from pyramid import httpexceptions as hexc
 
 from pyramid.view import forbidden_view_config
@@ -34,7 +35,8 @@ class ForbiddenView(BaseTemplateView):
 
         if is_browser_request(self.request):
             success = self.request.path_qs
-            return hexc.HTTPFound(location='/login?success={}'.format(success))
+            url = urljoin(self.request.application_url, '/testme/login?success={}'.format(success))
+            return hexc.HTTPFound(location=url)
 
         self.context.status_code = 401
         return {'message': '401 Unauthorized.'}

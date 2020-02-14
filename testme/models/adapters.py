@@ -31,7 +31,7 @@ def _site_manager_from_context(context):
 @interface.implementer(IApplicationRoot)
 def _application_root(request):
     conn = get_connection(request)
-    return conn.root()[APP_ROOT_KEY]
+    return conn.root()['Application'][APP_ROOT_KEY]
 
 
 @interface.implementer(IUsersFolderFactory)

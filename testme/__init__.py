@@ -22,7 +22,7 @@ from testme.interfaces import IApplicationServer
 
 
 def root_factory(request):
-    return IApplicationRoot(request)
+    return IApplicationRoot(request).__parent__
 
 
 def main(global_config, **settings):

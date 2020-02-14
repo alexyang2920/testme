@@ -9,10 +9,8 @@ from zope.location.interfaces import IContained
 from zope.schema import TextLine
 from zope.schema import Float
 
-from zope.site.interfaces import IRootFolder
 
-
-class IApplicationRoot(IRootFolder):
+class IApplicationRoot(IContainer):
     """
     Marker interface that indicates an IRootFolder,
     also should represent the pyramid root factory.

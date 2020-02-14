@@ -25,7 +25,7 @@ class ApplicationServer(object):
         lsm = component.getSiteManager()
         conn = IConnection(lsm, None)
         if conn:
-            return conn.root()[APP_ROOT_KEY]
+            return conn.root()['Application'][APP_ROOT_KEY]
 
         raise InvalidSiteError("Using app server outside of site manager")
 

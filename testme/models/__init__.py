@@ -15,7 +15,7 @@ INTIDS = 'intids'
 
 
 @interface.implementer(IApplicationRoot)
-class ApplicationRootFolder(Folder):
+class ApplicationRoot(Folder):
 
     __acl__ = (
         (Allow, Authenticated, ALL_PERMISSIONS),

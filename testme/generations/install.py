@@ -7,10 +7,10 @@ from zope.component.hooks import site as set_site
 
 from zope.generations.generations import SchemaManager
 
-from zope.site.interfaces import IRootFolder
 from zope.site.site import LocalSiteManager
+from zope.site.folder import rootFolder
 
-from testme.models.root import ApplicationRootFolder
+from testme.models import ApplicationRoot
 
 from testme.models.interfaces import IApplicationRoot
 
@@ -59,16 +59,20 @@ def evolve(context):
     setHooks()
 
     # root folder
-    site = ApplicationRootFolder()
+    root_folder = rootFolder()
+    root['Application'] = root_folder
+    conn.add(root_folder)
+    assert root_folder._p_jar is conn
+
+    # site
+    site = ApplicationRoot()
     site.__name__ = APP_ROOT_KEY
-    root[APP_ROOT_KEY] = site
-
-    assert IApplicationRoot.providedBy(site) is True
-    assert IRootFolder.providedBy(site) is True
-
+    root_folder[APP_ROOT_KEY] = site
     conn.add(site)
+    assert site.__parent__ is root_folder
     assert site._p_jar is conn
-    
+    assert IApplicationRoot.providedBy(site) is True
+
     # site manager.
     siteManager = LocalSiteManager(site)
     site.setSiteManager(siteManager)
