@@ -15,6 +15,5 @@ def setup(env):
     env['tm'] = request.tm
     env['models'] = models
     env['conn'] = conn.root()
-    env['testme'] = site = conn.root()[models.APP_ROOT_KEY]
-
+    env['testme'] = site = conn.root()['Application'][models.APP_ROOT_KEY]
     setSite(site)
