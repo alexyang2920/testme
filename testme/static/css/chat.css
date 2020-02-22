@@ -1,0 +1,27 @@
+.container {
+    width: 800px;
+    margin: 20px auto;
+    box-shadow: 0 10px 25px #ddd;
+    background-color: #FFF;
+    border: solid 1px #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    min-height: 600px;
+}
+
+.chat {
+    display: flex;
+    flex-direction: row;
+}
+
+.left {
+    width: 600px;
+}
+
+.right {
+    width: 200px;
+}
+
+.message-list {
+    height: 400px;
+}

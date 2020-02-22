@@ -6,6 +6,9 @@
     </div>
     <div style="float:right">
         <metal:block tal:omit-tag="" tal:condition="view.logged_in">
+            <div class="nav-item">
+                <a href="/testme/chat">Chat</a>
+            </div>
             <div class="nav-item dropdown">
                 <a href="javascript:void(0)" class="dropbtn">Users</a>
                 <div class="dropdown-content">

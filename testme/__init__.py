@@ -1,3 +1,8 @@
+from gevent import monkey
+monkey.patch_all()
+
+from geventwebsocket import Resource
+
 from pyramid.config import Configurator
 from pyramid_zodbconn import get_connection
 
@@ -10,6 +15,8 @@ from pyramid.tweens import EXCVIEW
 from zope import component
 
 from zope.component.hooks import setHooks
+
+from testme.chat.app import create_chat_app
 
 from testme.models.interfaces import IApplicationRoot
 
@@ -25,7 +32,7 @@ def root_factory(request):
     return IApplicationRoot(request).__parent__
 
 
-def main(global_config, **settings):
+def create_wsgi_app(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
     # z3c registry required this.
@@ -70,3 +77,10 @@ def main(global_config, **settings):
     component.getGlobalSiteManager().registerUtility(server, IApplicationServer)
 
     return config.make_wsgi_app()
+
+
+def main(global_config, **settings):
+    return Resource([
+        ('^/chat', create_chat_app(**settings)),
+        ('^/.*', create_wsgi_app(global_config, **settings))
+    ])

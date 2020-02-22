@@ -1,0 +1,85 @@
+<metal:block metal:use-macro="load: ./macros/layout.pt">
+    <title metal:fill-slot="title">
+        Chat
+    </title>
+	<metal:block metal:fill-slot="css"><!-- css -->
+    <link href="/static/css/chat.css" rel="stylesheet">
+    </metal:block>
+    <metal:block metal:fill-slot="content"><!-- main -->
+    <div class="container" login_user="${request.authenticated_userid}">
+        <h1 style="margin:0;">Chat Room (<small class="connecting_status">disconnected</small>)</h1>
+        <div class="chat">
+            <div class="left">
+                <ul class="message-list">
+                </ul>
+                <div class="send_message_input">
+                    <input type="text" class="message">
+                    <button class="send_message">Send</button>
+                </div>
+            </div>
+
+            <div class="right">
+                <h3>Connected clients</h3>
+                <ul class="connected_clients">
+                </ul>
+            </div>
+        </div>
+    </div>
+    </metal:block>
+    <metal:block metal:fill-slot="script"><!-- script -->
+    <script>
+        var username = $('.container').attr('login_user');
+        var ws = new WebSocket('ws://' + window.location.hostname +':8080/chat');
+
+        ws.onopen = function () {
+            $('.connecting_status').text('connected: '+ username);
+        }
+
+        ws.onclose = function () {
+            $('.connecting_status').text('disconnected');
+        }
+
+        ws.onmessage = function(msg_event) {
+            var data = $.parseJSON(msg_event.data);
+
+            if (data.msg_type == 'message') {
+                $('.message-list').append(
+                    '<li>' + 
+                        data.username + ' : ' + data.message +
+                    '</li>'
+                );
+            }
+            else if (data.msg_type == 'update_clients') {
+                $('.connected_clients li').remove();
+
+                data.clients.forEach(function(nick) {
+                    $('.connected_clients').append('<li>' + nick);
+
+                });
+            }
+        }
+
+        setInterval(function() {
+            ws.send(JSON.stringify({
+                msg_type: 'update_clients',
+                username: username
+            }));
+        }, 10000);
+
+        $('.message').keypress(function(e) {
+            if (e.which === 13) {
+                $('.send_message').click();
+            }
+        });
+
+        $('.send_message').click(function() {
+            ws.send(JSON.stringify({
+                msg_type: 'message',
+                username: username,
+                message: $('.message').val()
+            }));
+            $('.message').val('');
+        });
+    </script>
+    </metal:block>
+</metal:block>
