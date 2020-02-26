@@ -1,0 +1,12 @@
+<!-- -*- mode: nxml -*- -->
+<configure	xmlns="http://namespaces.zope.org/zope"
+			xmlns:zcml="http://namespaces.zope.org/zcml">
+
+	<include package="zope.component" file="meta.zcml" />
+	<include package="zope.component" />
+
+	<adapter factory=".adapters.get_mailbox"
+			 for="testme.models.interfaces.IUser"
+			 provides=".interfaces.IMailbox" />
+
+</configure>

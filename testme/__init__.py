@@ -81,6 +81,6 @@ def create_wsgi_app(global_config, **settings):
 
 def main(global_config, **settings):
     return Resource([
-        ('^/chat', create_chat_app(**settings)),
-        ('^/.*', create_wsgi_app(global_config, **settings))
+        ('^/.*', create_wsgi_app(global_config, **settings)),
+        ('^/chat', create_chat_app(**settings))
     ])

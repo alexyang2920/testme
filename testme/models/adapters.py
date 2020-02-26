@@ -24,7 +24,7 @@ def _site_manager_from_context(context):
     # component.getAllUtilitiesRegisteredFor needs this,
     # may have other better solution.
     app_root = find_interface(context, IApplicationRoot)
-    return app_root.getSiteManager()
+    return app_root and app_root.getSiteManager()
 
 
 @component.adapter(IRequest)

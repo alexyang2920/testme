@@ -42,6 +42,8 @@ requires = [
     'zc.intid',
     'zope.catalog',
     'zope.site',
+    
+    'redis',
 ]
 
 tests_require = [

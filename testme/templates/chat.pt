@@ -15,6 +15,8 @@
                 <div class="send_message_input">
                     <input type="text" class="message">
                     <button class="send_message">Send</button>
+                    <button class="close">Close</button>
+                    <button class="connect">Connect</button>
                 </div>
             </div>
 
@@ -28,28 +30,63 @@
     </metal:block>
     <metal:block metal:fill-slot="script"><!-- script -->
     <script>
+        var ws = connect();
+
+        $('.connect').click(function() {
+            ws = connect();
+        });
+
+        $('.close').click(function() {
+            ws.close();
+        });
+
+        setInterval(function() {
+            ws.send(JSON.stringify({
+                msg_type: 'ping'
+            }));
+        }, 10000);
+
         var username = $('.container').attr('login_user');
-        var ws = new WebSocket('ws://' + window.location.hostname +':8080/chat');
 
-        ws.onopen = function () {
-            $('.connecting_status').text('connected: '+ username);
+        function connect() {
+            console.log("Connecting...")
+            ws = new WebSocket('ws://' + window.location.hostname +':8080/chat');
+            ws.onopen = onopen;
+            ws.onclose = onclose;
+            ws.onmessage = onmessage;
+            return ws;
         }
 
-        ws.onclose = function () {
-            $('.connecting_status').text('disconnected');
+        function onopen() {
+            ws.send(JSON.stringify({
+                'msg_type': 'auth',
+                'username': username
+            }));
+            console.log("opened.")
         }
 
-        ws.onmessage = function(msg_event) {
+        function onclose() {
+            if(ws.readyState === ws.CLOSED){
+                $('.connecting_status').text('disconnected');
+                console.log("closed.")
+            }
+        }
+
+        function onmessage(msg_event) {
             var data = $.parseJSON(msg_event.data);
 
-            if (data.msg_type == 'message') {
+            if (data.msg_type === 'authed') {
+                console.log('authed: ' + data.username);
+                $('.connecting_status').text('connected: '+ username);
+            }
+            else if (data.msg_type === 'message') {
                 $('.message-list').append(
                     '<li>' + 
                         data.username + ' : ' + data.message +
                     '</li>'
                 );
             }
-            else if (data.msg_type == 'update_clients') {
+            else if (data.msg_type === 'update_clients') {
                 $('.connected_clients li').remove();
 
                 data.clients.forEach(function(nick) {
@@ -58,13 +95,6 @@
                 });
             }
         }
-
-        setInterval(function() {
-            ws.send(JSON.stringify({
-                msg_type: 'update_clients',
-                username: username
-            }));
-        }, 10000);
 
         $('.message').keypress(function(e) {
             if (e.which === 13) {
@@ -76,10 +106,12 @@
             ws.send(JSON.stringify({
                 msg_type: 'message',
                 username: username,
-                message: $('.message').val()
+                message: $('.message').val(),
+                target: 'users'
             }));
             $('.message').val('');
         });
+
     </script>
     </metal:block>
 </metal:block>

@@ -1,5 +1,7 @@
 from zope import interface
 
+from zope.annotation.interfaces import IAttributeAnnotatable
+
 from zope.catalog.interfaces import ICatalog
 
 from zope.container.interfaces import IContainer
@@ -17,7 +19,7 @@ class IApplicationRoot(IContainer):
     """
 
 
-class IUser(IContained):
+class IUser(IContained, IAttributeAnnotatable):
 
     username = TextLine(title="The username",
                         required=True)

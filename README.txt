@@ -53,4 +53,15 @@ Getting Started
 	https://blog.csdn.net/physicsdandan/article/details/45667357
 
 	https://www.digitalocean.com/community/questions/configure-nginx-for-nodejs-backend-and-react-frontend-app
-	
+
+
+- redis
+	https://redis.io/topics/quickstart
+	steps:
+		wget http://download.redis.io/redis-stable.tar.gz
+		tar xvzf redis-stable.tar.gz
+		cd redis-stable
+		make
+
+		cp redis-server ~/VirtualEnvs/testme/bin
+		cp redis-cli ~/VirtualEnvs/testme/bin

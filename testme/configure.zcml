@@ -11,6 +11,8 @@
 	<include package="zope.generations" />
 	<include package="zope.generations" file="subscriber.zcml" />
 
+	<include package="zope.annotation" />
+
 	<!-- indexing -->
 	<include package="zope.keyreference" file="configure.zcml" />
 	<include package="zope.catalog" file="subscribers.zcml" />
@@ -23,5 +25,7 @@
 			 name="testme" />
 
 	<include package=".models" file="configure.zcml" />
+	<include package=".redis" file="configure.zcml" />
+	<include package=".chat" file="configure.zcml" />
 
 </configure>
