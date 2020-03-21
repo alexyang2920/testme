@@ -27,5 +27,6 @@
 	<include package=".models" file="configure.zcml" />
 	<include package=".redis" file="configure.zcml" />
 	<include package=".chat" file="configure.zcml" />
+	<include package=".jira" file="configure.zcml" />
 
 </configure>

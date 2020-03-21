@@ -1,0 +1,16 @@
+<!-- -*- mode: nxml -*- -->
+<configure	xmlns="http://namespaces.zope.org/zope"
+			xmlns:zcml="http://namespaces.zope.org/zcml">
+
+	<include package="zope.component" file="meta.zcml" />
+	<include package="zope.component" />
+
+	<adapter factory=".adapters._ticket_comments_factory"
+		 	 for=".interfaces.ITicket"
+		 	 provides=".interfaces.ITicketCommentsContainer"/>
+
+	<adapter factory=".decorators.ProjectDecorator"
+		 	 for=".interfaces.IProject pyramid.interfaces.IRequest"
+		 	 provides="testme.interfaces.IExternalDecorator"/>
+
+</configure>

@@ -128,8 +128,10 @@ function doDeletionRequest (me, url, data, modal, postHandler) {
 /** file upload request. */
 function doUploadFile(me, url, data, success, error, modal) {
     // show spinner
-    $($(me).find('.nonSpinnerText')[0]).hide();
-    $($(me).find('.spinnerText')[0]).show();
+    if ($(me)){
+        $($(me).find('.nonSpinnerText')[0]).hide();
+        $($(me).find('.spinnerText')[0]).show();
+    }
 
     $.ajax({
         url: url,
@@ -148,12 +150,30 @@ function doUploadFile(me, url, data, success, error, modal) {
             });
         },
         error: function (jqXHR, exception) {
-            $($(me).find('.spinnerText')[0]).hide();
-            $($(me).find('.nonSpinnerText')[0]).show();
+            if($(me)){
+                $($(me).find('.spinnerText')[0]).hide();
+                $($(me).find('.nonSpinnerText')[0]).show();
+            }
             ajaxErrorHandler(jqXHR, exception, function() {
                 var res = JSON.parse(jqXHR.responseText);
                 showErrorMessage(res['message'], success, error);
             }, modal);
         }
     });
+}
+
+
+function get_link(result, rel) {
+    var link;
+    links = result.links;
+    if(links){
+        $(links).each(function(idx, value){
+            if(value['rel'] === rel){
+                link = value;
+                return false
+            }
+        });
+
+    }
+    return link;
 }

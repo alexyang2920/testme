@@ -27,7 +27,7 @@ from zope.intid.interfaces import IIntIds as zope_IIntIds
 from zc.intid.interfaces import IIntIds as zc_IIntIds
 
 
-generation = 0
+generation = 1
 
 logger = __import__('logging').getLogger(__name__)
 

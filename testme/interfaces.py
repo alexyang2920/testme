@@ -13,3 +13,9 @@ class IApplicationServer(interface.Interface):
 
 class InvalidSiteError(Exception):
     pass
+
+
+class IExternalDecorator(interface.Interface):
+    """
+    Should be registered as adapter for objects that exposure more information.
+    """

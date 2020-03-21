@@ -32,7 +32,7 @@ class BaseView(object):
         value = value.strip() if value else value
         if not value and required:
             raise_json_error(hexc.HTTPUnprocessableEntity,
-                             'Missing %s' % name)
+                             'Missing %s.' % name)
         return value
 
     def get_value(self, name, params=None, required=True):
@@ -43,7 +43,7 @@ class BaseView(object):
 
         if value is None and required:
             raise_json_error(hexc.HTTPUnprocessableEntity,
-                             'Missing %s' % name)
+                             'Missing %s.' % name)
         return value
 
 

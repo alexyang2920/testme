@@ -10,6 +10,12 @@
                 <a href="/testme/chat">Chat</a>
             </div>
             <div class="nav-item dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Jira</a>
+                <div class="dropdown-content">
+                    <a href="/testme/jira/projects/@@list">Projects</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
                 <a href="javascript:void(0)" class="dropbtn">Users</a>
                 <div class="dropdown-content">
                     <a href="/testme/users">Users</a>

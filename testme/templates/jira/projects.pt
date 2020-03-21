@@ -1,0 +1,84 @@
+<metal:block metal:use-macro="load: ../macros/layout.pt">
+    <title metal:fill-slot="title">
+        Projects
+    </title>
+	<metal:block metal:fill-slot="css"><!-- css -->
+        <style>
+            body {
+                font-size: 16px;
+                line-height: 20px;
+            }
+            input[name=search] {
+                padding: 8px 16px;
+            }
+            button[name=create_project] {
+                float:right;
+                padding: 8px 16px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px 16px;
+            }
+
+            th {
+                border-bottom: 1px solid #ddd;
+            }
+        </style>
+    </metal:block>
+    <metal:block metal:fill-slot="content"><!-- main -->
+        <div>
+            <button type="button" name="create_project" onclick="OnCreateProject();">Create project</button>
+            <h1 style="margin-top:16px;">Projects</h1>
+        </div>
+
+        <div style="margin-top: 50px;">
+            <input type="text" name="search"/>
+        </div>
+
+        <table id="projects-table" style="margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Lead</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </metal:block>
+    <metal:block metal:fill-slot="script"><!-- script -->
+        <script>
+            function OnCreateProject() {
+                window.location.href = '/testme/jira/projects/@@create';
+            }
+
+            function loadProjects() {
+                url = '/testme/jira/projects';
+                doAjaxRequest(null, url, {}, 'GET', '.success', '.error', null, function (result) {
+                    result.forEach(function(value){
+                        var link = get_link(value, 'detail');
+                        var name = '<a href="'+ link.href + '">' + value["project_name"] + '</a>';
+                        var row = "<tr>";
+                            row += "<td>" + name+ "</td>";
+                            row += "<td>" + value["project_type"]+ "</td>";
+                            row += "<td>" + value["project_lead"]["username"]+ "</td>";
+                            row += "</tr>";
+                        $('#projects-table > tbody:last-child').append(row);
+                    });
+                });
+            }
+
+            $( document ).ready(function() {
+                loadProjects();
+            });
+        </script>
+    </metal:block>
+</metal:block>
