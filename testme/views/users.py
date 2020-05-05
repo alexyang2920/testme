@@ -3,12 +3,14 @@ from pyramid import httpexceptions as hexc
 
 from testme.models.interfaces import IUser
 from testme.models.interfaces import IUsersFolder
+from testme.auth import ACT_READ
 from testme.views.base import BaseTemplateView, BaseView
 
 
 @view_config(renderer='json', 
              context=IUsersFolder,
-             request_method='GET')
+             request_method='GET',
+             permission=ACT_READ)
 class UsersGetView(BaseTemplateView):
 
     def __call__(self):

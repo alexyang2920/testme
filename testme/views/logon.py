@@ -40,7 +40,7 @@ class LoginPage(BaseTemplateView):
              name='login')
 class LoginView(BaseView):
 
-    def __call__(self):
+    def doLogin(self):
         username = self.get_value('username')
         password = self.get_value('password')
         if not check_credentials(username, password):
@@ -49,9 +49,23 @@ class LoginView(BaseView):
 
         headers = remember(self.request, username)
         self.request.response.headerlist.extend(headers)
+        user = get_users_folder().get(username)
+        return user
 
+    def __call__(self):
+        self.doLogin()
         success = self.request.params.get('success') or '/testme'
         return {'redirect': success}
+
+
+@view_config(renderer='json', 
+             context=IApplicationRoot, 
+             request_method='POST',
+             name='jsonLogin')
+class LoginWithUserResultView(LoginView):
+
+    def __call__(self):
+        return self.doLogin()
 
 
 @view_config(context=IApplicationRoot, 
@@ -65,6 +79,19 @@ class LogoutView(BaseView):
         url = urljoin(self.request.application_url, '/testme/login')
         return hexc.HTTPFound(location=url,
                               headers=headers)
+
+
+@view_config(renderer='json',
+             context=IApplicationRoot, 
+             request_method='GET',
+             name='jsonLogout')
+class LogoutWithJsonView(BaseView):
+
+    def __call__(self):
+        self.request.session.invalidate()
+        headers = forget(self.request)
+        self.request.response.headerlist.extend(headers);
+        return {}
 
 
 @view_config(renderer='../templates/register.pt', 
