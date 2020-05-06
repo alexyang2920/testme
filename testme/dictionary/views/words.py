@@ -14,7 +14,7 @@ from testme.dictionary.model import Word
 class WordsGetView(BaseView):
 
     def __call__(self):
-        return [x for x in self.context.values()]
+        return sorted([x for x in self.context.values()],key=lambda x: x.lastModified, reverse=True)
 
 
 @view_config(renderer='json', 
