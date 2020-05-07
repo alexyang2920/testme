@@ -1,0 +1,63 @@
+<metal:block metal:use-macro="load: ../macros/layout.pt">
+    <title metal:fill-slot="title">
+        Blogs
+    </title>
+	<metal:block metal:fill-slot="css"><!-- css -->
+        <style>
+            body {
+                font-size: 16px;
+                line-height: 20px;
+            }
+            input[name=search] {
+                padding: 8px 16px;
+            }
+            button[name=create_project] {
+                float:right;
+                padding: 8px 16px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px 16px;
+            }
+
+            th {
+                border-bottom: 1px solid #ddd;
+            }
+        </style>
+    </metal:block>
+    <metal:block metal:fill-slot="content"><!-- main -->
+        <div>
+            <button type="button">Create New Blog</button>
+            <h1 style="margin-top:16px;">Blogs</h1>
+        </div>
+
+
+        <div style="margin-top: 50px;">
+            <input type="text" name="search"/>
+        </div>
+
+        <table id="blogs-table" style="margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Lead</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </metal:block>
+    <metal:block metal:fill-slot="script"><!-- script -->
+        <script>
+
+        </script>
+    </metal:block>
+</metal:block>
